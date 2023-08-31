@@ -12,6 +12,11 @@ import org.springframework.web.server.ResponseStatusException;
 import java.util.List;
 import java.util.Optional;
 
+/*
+ *   Camada responsável por receber todas as Requisições HTTP (HTTP Request), enviadas por um Cliente HTTP (Postman ou o
+ *   Front-end da API), para a nossa aplicação e responder (HTTP Response) as requisições de acordo com o resultado do
+ *   processamento da requisição no Back-end.
+ */
 @RestController
 @RequestMapping("/postagens")
 @CrossOrigin(origins = "*", allowedHeaders="*")
@@ -20,23 +25,23 @@ public class PostagemController {
     private PostagemRepository postagemRepository;
 
     @GetMapping
-    public ResponseEntity<List <Postagem>> getAll(){
+    public ResponseEntity<List <Postagem>> getAll() {
         return ResponseEntity.ok(postagemRepository.findAll());
     }
 
     @GetMapping("/titulo/{titulo}")
-    public ResponseEntity <List<Postagem>> getByTitulo(@PathVariable String titulo){
+    public ResponseEntity <List<Postagem>> getByTitulo(@PathVariable String titulo) {
         return ResponseEntity.ok(postagemRepository.findAllByTituloContainingIgnoreCase(titulo));
     }
 
     @PostMapping
-    public ResponseEntity<Postagem> post(@Valid @RequestBody Postagem postagem){
+    public ResponseEntity<Postagem> post(@Valid @RequestBody Postagem postagem) {
         return ResponseEntity.status(HttpStatus.CREATED)
                 .body(postagemRepository.save(postagem));
     }
 
     @PutMapping
-    public ResponseEntity<Postagem> put(@Valid @RequestBody Postagem postagem){
+    public ResponseEntity<Postagem> put(@Valid @RequestBody Postagem postagem) {
         return postagemRepository.findById(postagem.getId())
                 .map(resposta -> ResponseEntity.status(HttpStatus.OK)
                 .body(postagemRepository.save(postagem)))
@@ -51,7 +56,6 @@ public class PostagemController {
         if(postagem.isEmpty())
             throw new ResponseStatusException(HttpStatus.NOT_FOUND);
         postagemRepository.deleteById(id);
-
-        
     }
+
 }
