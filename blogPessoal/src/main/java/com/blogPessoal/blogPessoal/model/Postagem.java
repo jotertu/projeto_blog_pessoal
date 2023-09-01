@@ -21,8 +21,6 @@ import org.hibernate.annotations.UpdateTimestamp;
 @Table(name = "tb_postagens")
 public class Postagem {
 
-	// Identificador único
-
 	// A Anotação @Id inidica que o Atributo anotado será a Chave Primária (Primary Key - PK) da Tabela tb_postagens.
 	@Id
 
