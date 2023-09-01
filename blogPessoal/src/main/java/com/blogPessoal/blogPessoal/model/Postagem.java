@@ -35,7 +35,7 @@ public class Postagem {
 	// configurar uma mensagem para o usuário através do Atributo message.
 	@NotBlank(message = "O atributo título é Obrigatório!")
 
-	 // A anotação @Size define o valor Mínimo (min) e Máximo (max) de Caracteres do Atributo.
+	// A anotação @Size define o valor Mínimo (min) e Máximo (max) de Caracteres do Atributo.
 	@Size(min = 5, max = 100, message = "O atributo título deve conter no mínimo 05 e no máximo 100 caracteres")
 
 	// Título da postagem
