@@ -13,10 +13,9 @@ import org.hibernate.annotations.UpdateTimestamp;
  * dados. As Classes criadas nesta camada representam os objetos que serão persistidos no Banco de dados.
  * */
 
-/*
- * A Anotação (Annotation) @Entity indica que esta Classe define uma entidade, ou seja, ela será utilizada para gerar uma tabela no
- * Banco de dados da aplicação.
- * */
+// A Anotação (Annotation) @Entity indica que esta Classe define uma entidade, ou seja, ela será utilizada para gerar uma tabela no
+// Banco de dados da aplicação.
+
 @Entity
 @Table(name = "tb_postagens")
 public class Postagem {
