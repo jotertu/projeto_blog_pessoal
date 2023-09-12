@@ -8,52 +8,35 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 import org.hibernate.annotations.UpdateTimestamp;
 
-/**
- * Camada responsável pela abstração dos nossos Objetos em registros das nossas tabelas, que serão geradas no Banco de
- * dados. As Classes criadas nesta camada representam os objetos que serão persistidos no Banco de dados.
- * */
-
-// A Anotação (Annotation) @Entity indica que esta Classe define uma entidade, ou seja, ela será utilizada para gerar uma tabela no
-// Banco de dados da aplicação.
-
 @Entity
 @Table(name = "tb_postagens")
 public class Postagem {
 
-	// A Anotação @Id inidica que o Atributo anotado será a Chave Primária (Primary Key - PK) da Tabela tb_postagens.
+	// Identificador único da postagem
 	@Id
-
-	// A Anotação @GeneratedValue indica que a Chave Primária será gerada pelo Spring Data JPA.
-	// O parâmetro strategy indica de que forma esta Chave Primária será gerada.
-	// A Estratégia GenerationType.IDENTITY indica que a Chave Primária será gerada pelo Banco de dados
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-
-	// Identificador único da tabela
-	private Long id; // Atributo: ID; Tipo de dado Java: Long; Tipo de dado MySQL: BIGINT;
-
-	// A anotação @NotBlank não permite que o Atributo seja Nulo ou contenha apenas Espaços em branco. Você pode
-	// configurar uma mensagem para o usuário através do Atributo message.
-	@NotBlank(message = "O atributo título é Obrigatório!")
-
-	// A anotação @Size define o valor Mínimo (min) e Máximo (max) de Caracteres do Atributo.
-	@Size(min = 5, max = 100, message = "O atributo título deve conter no mínimo 05 e no máximo 100 caracteres")
+	private Long id;
 
 	// Título da postagem
-	private String titulo; // Atributo: título; Tipo de dado Java: String; Tipo de dado MySQL: VARCHAR(100);
+	@NotBlank(message = "O atributo título é Obrigatório!")
+	@Size(min = 5, max = 100, message = "O atributo título deve conter no mínimo 05 e no máximo 100 caracteres")
+	private String titulo;
 
 	// Conteúdo da postagem
 	@NotBlank(message = "O atributo texto é Obrigatório!")
 	@Size(min = 5, max = 1000, message = "O atributo texto deve conter no mínimo 05 e no máximo 1000 caracteres")
-	private String texto; // Atributo: texto; Tipo de dado Java: String; Tipo de dado MySQL: VARCHAR(1000);
+	private String texto;
 
-	// Data e hora da publicação/atualização da postagem
-	// A anotação @UpdateTimestamp configura o Atributo data como Timestamp
 	@UpdateTimestamp
-	private LocalDateTime data; // Atributo: data; Tipo de dado Java: LocalDateTime; Tipo de dado MySQL: DATETIME(6);
+	private LocalDateTime data;
 
 	@ManyToOne
 	@JsonIgnoreProperties("postagem")
 	private Tema tema;
+
+	@ManyToOne
+	@JsonIgnoreProperties("postagem")
+	private Usuario usuario;
 
 	public Long getId() {
 		return id;
@@ -93,5 +76,13 @@ public class Postagem {
 
 	public void setTema(Tema tema) {
 		this.tema = tema;
+	}
+
+	public Usuario getUsuario() {
+		return this.usuario;
+	}
+
+	public void setUsuario(Usuario usuario) {
+		this.usuario = usuario;
 	}
 }
