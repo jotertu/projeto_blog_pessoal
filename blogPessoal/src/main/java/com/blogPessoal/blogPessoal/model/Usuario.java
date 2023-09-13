@@ -1,27 +1,24 @@
 package com.blogPessoal.blogPessoal.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
-
 import java.util.List;
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.Table;
 
 @Entity
-@Table(name = "tb_postagens")
+@Table(name = "tb_usuarios")
 public class Usuario {
 
-    public Usuario(Long id, String nome, String usuario, String senha, String foto) {
-        this.id = id;
-        this.nome = nome;
-        this.usuario = usuario;
-        this.senha = senha;
-        this.foto = foto;
-    }
-
-    public Usuario() { }
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -40,7 +37,7 @@ public class Usuario {
     @Size(max = 5000, message = "O link da foto não pode ser maior do que 5000 caracteres")
     private String foto;
 
-    @OneToMany(mappedBy = "usuario", cascade = CascadeType.REMOVE)
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "usuario", cascade = CascadeType.REMOVE)
     @JsonIgnoreProperties("usuario")
     private List<Postagem> postagem;
 
